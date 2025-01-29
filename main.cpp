@@ -20,7 +20,7 @@ class PriorityQueue {
         size_t nextElem(void) const {
             for (size_t priority = this->maxPriority; priority >= 0; priority--) {
                 for (size_t i = 0; i < this->elemsCounter; i++) {
-                    QueueElem elem = this->arr[i];
+                    QueueElem& elem = this->arr[i];
                     if (!elem.poped && elem.priority == priority) { return i; }
                 }
             }
@@ -61,7 +61,7 @@ class PriorityQueue {
         size_t size(void) const { 
             size_t activeElems = 0;
             for (size_t i = 0; i < this->elemsCounter; i++) {
-                QueueElem elem = this->arr[i];
+                QueueElem& elem = this->arr[i];
                 if (!elem.poped) { activeElems++; }
             }
             return activeElems;
