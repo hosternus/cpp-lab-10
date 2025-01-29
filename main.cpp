@@ -15,6 +15,7 @@ class PriorityQueue {
         QueueElem* arr = nullptr;
         size_t elemsCounter = 0;
         size_t maxPriority = 0;
+        size_t length = 0;
 
         size_t nextElem(void) const {
             for (size_t priority = this->maxPriority; priority >= 0; priority--) {
@@ -29,6 +30,7 @@ class PriorityQueue {
     public:
         PriorityQueue(size_t length) {
             this->arr = new QueueElem[length];
+            this->length = length;
         }
 
         ~PriorityQueue() {
@@ -36,14 +38,19 @@ class PriorityQueue {
         }
 
         T pop(void) {
+            if (this->elemsCounter == 0) { cout << "Пустая очередь" << endl; abort(); }
             T item = this->peek();
             this->arr[this->nextElem()].poped = true;
             return item;
         }
 
-        T peek(void) const { return this->arr[this->nextElem()].item; }
+        T peek(void) const {
+            if (this->elemsCounter == 0) { cout << "Пустая очередь" << endl; abort(); }
+            return this->arr[this->nextElem()].item;
+        }
 
         void push(T item, size_t priority) {
+            if ((this->elemsCounter + 1)  == this->length) { cout << "Очередь переполнена" << endl; abort(); }
             QueueElem elem;
             elem.item = item;
             elem.priority = priority;
