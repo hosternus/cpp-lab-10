@@ -15,8 +15,13 @@ class PQueue {
         };
 
         Item *head = nullptr;
-        Item *last = nullptr;
         size_t qsize = 0;
+
+        Item* lastadded(void) const {
+            Item* la = this->head;
+            while (la != nullptr && la->next != nullptr) { la = la->next; }
+            return la;
+        }
 
     public:
 
@@ -34,18 +39,17 @@ class PQueue {
 
         bool push(T data, size_t priority) {
 
+            Item* last = this->lastadded();
             Item* nitem = new Item;
             nitem->data = data;
             nitem->priority = priority;
 
             if (this->head == nullptr) {
                 this->head = nitem;
-                this->last = nitem;
                 this->qsize++;
                 return true;
-            } else if (nitem->priority <= this->last->priority) {
-                this->last->next = nitem;
-                this->last = nitem;
+            } else if (nitem->priority <= last->priority) {
+                last->next = nitem;
                 this->qsize++;
                 return true;
             } else if (this->head->priority < nitem->priority) {
@@ -53,7 +57,7 @@ class PQueue {
                 this->head = nitem;
                 this->qsize++;
                 return true;
-            } else if (nitem->priority > this->last->priority) {
+            } else if (nitem->priority > last->priority) {
                 Item* previous = nullptr;
                 for (Item* i = this->head; i->priority >= nitem->priority; i = i->next) { previous = i; }
                 nitem->next = previous->next;
