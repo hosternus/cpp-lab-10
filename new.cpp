@@ -41,24 +41,24 @@ class PQueue {
             if (this->head == nullptr) {
                 this->head = nitem;
                 this->last = nitem;
-                this->size++;
+                this->qsize++;
                 return true;
             } else if (nitem->priority <= this->last->priority) {
                 this->last->next = nitem;
                 this->last = nitem;
-                this->size++;
+                this->qsize++;
                 return true;
             } else if (this->head->priority < nitem->priority) {
                 nitem->next = this->head;
                 this->head = nitem;
-                this->size++;
+                this->qsize++;
                 return true;
             } else if (nitem->priority > this->last->priority) {
                 Item* previous = nullptr;
                 for (Item* i = this->head; i->priority >= nitem->priority; i = i->next) { previous = i; }
                 nitem->next = previous->next;
                 previous->next = nitem;
-                this->size++;
+                this->qsize++;
                 return true;
             }
 
@@ -68,7 +68,7 @@ class PQueue {
         Item* pop(void) {
             Item* out = this->head;
             this->head = this->head->next;
-            this->size--;
+            this->qsize--;
             return out;
         }
 
@@ -88,10 +88,15 @@ ostream& operator<<(ostream& os, const PQueue<T> &q) {
 
 int main(void) {
 
+    PQueue<string> pq;
 
-    
+    cout << pq << endl;
 
+    pq.push("prior3", 3);
+    pq.push("prior2", 2);
+    pq.push("prior1", 1);
 
+    cout << pq << endl;
 
     return 0;
 }
