@@ -103,5 +103,21 @@ int main(void) {
 
     cout << pq << endl;
 
+    pq.pop();
+
+    cout << pq << endl;
+
+    pq.push("prior1", 1);
+
+    cout << pq << endl;
+
+    pq.push("prior3", 3);
+
+    cout << pq << endl;
+
+    cout << "Peek: " << pq.peek() << endl << endl;
+
+    cout << pq << endl;
+
     return 0;
 }
