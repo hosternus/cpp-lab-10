@@ -72,7 +72,7 @@ class PQueue {
             return out;
         }
 
-        Item* peek(void) const { return this->next; }
+        Item* peek(void) const { return this->head; }
 
         size_t size(void) const { return this->qsize; }
 };
@@ -80,8 +80,9 @@ class PQueue {
 
 template <typename T>
 ostream& operator<<(ostream& os, const PQueue<T> &q) {
-    os << "Элементов: " << q->size() << endl;
-    os << "Следущий элемент: " << q->peek() << endl;
+    os << "Элементов: " << q.size() << endl;
+    os << "Следущий элемент: " << q.peek() << endl;
+    return os;
 }
 
 
