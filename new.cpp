@@ -65,14 +65,16 @@ class PQueue {
             return false;
         }
 
-        Item* pop(void) {
+        T pop(void) {
             Item* out = this->head;
+            T data = this->head->data;
             this->head = this->head->next;
             this->qsize--;
-            return out;
+            delete out;
+            return data;
         }
 
-        Item* peek(void) const { return this->head; }
+        T peek(void) const { return this->head->data; }
 
         size_t size(void) const { return this->qsize; }
 };
@@ -80,8 +82,11 @@ class PQueue {
 
 template <typename T>
 ostream& operator<<(ostream& os, const PQueue<T> &q) {
-    os << "Элементов: " << q.size() << endl;
-    os << "Следущий элемент: " << q.peek() << endl;
+    size_t sz = q.size();
+    os << "Элементов: " << sz << endl;
+    if (sz > 0) {
+        os << "Следущий элемент: " << q.peek() << endl;
+    }
     return os;
 }
 
