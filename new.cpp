@@ -11,24 +11,70 @@ class PQueue {
         struct Item {
             size_t priority;
             T data;
-            Item *previous = nullptr;
+            Item *next = nullptr;
         };
 
-        Item *first = nullptr;
-        size_t size = 0;
+        Item *head = nullptr;
+        Item *last = nullptr;
+        size_t qsize = 0;
 
     public:
 
-    Item* pop() {}
+        PQueue() {}
 
-    Item* push() {}
+        ~PQueue() {
+            Item* i = this->head;
+            Item* e = nullptr;
+            while (i != nullptr) {
+                e = i->next;
+                delete i;
+                i = e;
+            }
+        }
 
-    Item* peek() const {}
+        bool push(T data, size_t priority) {
 
-    size_t size() const {}
+            Item* nitem = new Item;
+            nitem->data = data;
+            nitem->priority = priority;
 
-    void print() const {}
+            if (this->head == nullptr) {
+                this->head = nitem;
+                this->last = nitem;
+                this->size++;
+                return true;
+            } else if (nitem->priority <= this->last->priority) {
+                this->last->next = nitem;
+                this->last = nitem;
+                this->size++;
+                return true;
+            } else if (this->head->priority < nitem->priority) {
+                nitem->next = this->head;
+                this->head = nitem;
+                this->size++;
+                return true;
+            } else if (nitem->priority > this->last->priority) {
+                Item* previous = nullptr;
+                for (Item* i = this->head; i->priority >= nitem->priority; i = i->next) { previous = i; }
+                nitem->next = previous->next;
+                previous->next = nitem;
+                this->size++;
+                return true;
+            }
 
+            return false;
+        }
+
+        Item* pop(void) {
+            Item* out = this->head;
+            this->head = this->head->next;
+            this->size--;
+            return out;
+        }
+
+        Item* peek(void) const { return this->next; }
+
+        size_t size(void) const { return this->qsize; }
 };
 
 
