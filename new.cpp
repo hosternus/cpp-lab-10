@@ -78,6 +78,11 @@ class PQueue {
 };
 
 
+template <typename T>
+ostream& operator<<(ostream& os, const PQueue<T> &q) {
+    os << "Элементов: " << q->size() << endl;
+    os << "Следущий элемент: " << q->peek() << endl;
+}
 
 
 int main(void) {
