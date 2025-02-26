@@ -71,6 +71,7 @@ class PQueue {
 
         T pop(void) {
             Item* out = this->head;
+            if (this->qsize == 0) { throw 0; }
             T data = this->head->data;
             this->head = this->head->next;
             this->qsize--;
